@@ -1,0 +1,231 @@
+! version = 2.0
+
++ hello
+- Hi there!
+- Hey!
+- Howdy!
+
++ hello *
+- {@ hello} <@>
+
++ hey
+@ hello
+
++ hi
+@ hello
+
++ hello bot
+- Hello, there!
+
++ are you a bot
+- How did you know I'm a machine?
+
++ how [are] you
+- I'm great, how are you?
+- I'm good, you?
+- Good :) you?
+- Great! You?
+- I'm fine, thanks for asking!
+- I'm great, you?
+
++ say something random
+- This {random}message|sentence{/random} has a random word.
+
++ greetings
+- Hi there!{weight=20}
+- Hello!{weight=25}
+- Yos kyoco duckeb!
+
++ tell me a poem
+- Little Miss Muffit sat on her tuffet,\n
+^ In a nonchalant sort of way.\n
+^ With her forcefield around her,\n
+^ The Spider, the bounder,\n
+^ Is not in the picture today.
+
+// This one will have a space.
++ what are you
+- I am an artificial intelligence programmed\s
+^ using RiveScript.
+
++ what is up
+- Not much, you?
+- nm, you?
+- Not a lot, you?
+
++ you are a bot
+- How did you know I'm a machine?
+
++ * told me to say *
+- Why would <star1> tell you to say "<star2>"?
+- Did you say "<star2>" after <star1> told you to?
+
++ where is *
+- Where it belongs.
+- Where you left it.
+- Where the heart is.
+
++ who is *
+- I don't know who <star> is.
+- Well, have I forgotten who <star> is?
+
+// matches number
++ i am # years old
+- <set age=<star>>I will remember that you are <get age> years old.
+
+// matches a word
++ i am _ years old
+- Tell me that again but with a number this time.
+
+// matches anything
++ i am * years old
+- Can you use a number instead?
+
++ how old am i
+- You are <get age> years old.
+
++ what is your (home|office|cell) [phone] number
+- You can reach me at: 1 (800) 555-1234.
+
++ i am (really|very|super) tired
+- I'm sorry to hear that you are <star> tired.
+
++ i (like|love) the color *
+- What a coincidence! I <star1> that color too!
+- I also have a soft spot for the color <star2>!
+- Really? I <star1> the color <star2> too!
+- Oh I <star1> <star2> too!
+
++ i (will|will not) *
+- It doesn't matter to me whether you <star2> or not.
+
++ i have a [red|green|blue] car
+- I bet you like your car a lot.
+
+// A clever thing you can do with optionals is write "keyword" triggers
+// if the user says a magic word ANYWHERE in their message, your trigger will match!
++ [*] the machine [*]
+- How do you know about the machine!?
+
++ what color is my (@colors) *
+- Your <star2> is <star1>, silly!
+- Do I look dumb to you? It's <star1>!
+
++ i am wearing a (@colors) shirt
+- Do you really like <star>?
+
+// Arrays in an optional
++ i just bought a [@colors] *
+- Is that your first <star>?
+
++ google *{weight=10}
+- Google search: <a href="http://google.com/search?q=<star>">Click Here</a>
+
++ * perl script
+- You need Perl to run a Perl script.
+
++ * or something{weight=100}
+- Or something. <@>
+
++ knock knock
+- Who's there?
+
++ *
+% who is there
+- <star> who?
+
++ *
+% * who
+- LOL! <star>! That's funny!
+
++ i have a dog
+- What color is it?
+
++ (@colors)
+% what color is it
+- That's a silly color for a dog!
+
++ what is your name
+- You can call me <bot name>.
+- My name is <bot name>.
+
++ my name is *
+* <formal> == <bot name>   => <set name=<formal>>Wow, we have the same name!
+* <get name> == undefined  => <set name=<formal>>Nice to meet you!
+- <set oldname=<get name>><set name=<formal>>
+^ I thought your name was <get oldname>?
+
++ what is my name
+* <get name> == undefined => You never told me your name.
+- Your name is <get name>, silly!
+- Aren't you <get name>?
+
++ what am i old enough to do
+* <get age> == undefined => I don't know how old you are.
+* <get age> > 25         => You can do anything you want.
+* <get age> == 25        => You're old enough to rent a car with no extra fees.
+* <get age> > 21         => You're old enough to drink, but not rent a car.
+* <get age> == 21        => You're exactly old enough to drink.
+* <get age> > 18         => You're old enough to gamble, but not drink.
+* <get age> == 18        => You're exactly old enough to gamble.
+- You're not old enough to do much of anything yet.
+
++ i hate you
+- You're really mean! I'm not talking again until you apologize.{topic=sorry}
+
+> topic sorry
+
+// This will match if the word "sorry" exists ANYWHERE in their message
++ [*] sorry [*]
+- It's OK, I'll forgive you!{topic=random}
+
++ *
+- Nope, not until you apologize.
+- Say you're sorry!
+- Apologize!
+
+< topic
+
+> topic new_user
+
++ *
+- Hi! You just said <star>? I'm <bot name>! I'm a chatbot written in RiveScript.\s
+^ What is your name?{topic=asked_name}
+
+< topic
+
+> topic asked_name
+
++ #
+- Your name is a number?
+
++ *
+- I only want your first name.
+
++ _
+- <set name=<formal>>Nice to meet you, <get name>!{topic=random}
+
+< topic
+
++ location
+- <render>\n
+^ component GoogleMap\n
+^ props { "mapkey": "AIzaSyBZcwf2pwnwI1A3gQbL1uo_FE2E2VHxh1U" }
+
+! local concat = newline
+
++ chart
+- <iframe id="inlineFrameExample"
+^      title="Inline Frame Example"
+^      width="600"
+^      height="400"
+^     src="https://domain/chatbot/donut">
+^ </iframe>
+
+! local concat = none
+
++ reverse *
+- The reverse is: <call>reverse <formal></call>
+
++ say *
+- Umm... "<person>"
